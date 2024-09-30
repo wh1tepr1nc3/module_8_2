@@ -1,29 +1,24 @@
-def personal_sum(*numbers):
-    result = 0
-    incorrect_data = 0
+def personal_sum(numbers: list) -> tuple:
+    result, incorrect_data = 0, 0
     for i in numbers:
-
-        for j in i:
-
-            try:
-                result += j
-            except TypeError:
-                incorrect_data += 1
-                print(f'некорректный тип данных для подсчета суммы - {j}')
+        try:
+            result += i
+        except TypeError:
+            incorrect_data += 1
+            print(f'некорректный тип данных для подсчета суммы - {i}')
+            incorrect_data += 1
     return result, incorrect_data
 
 
-def calculate_average(*numbers):
-    if isinstance(*numbers, int):
-        return None
+def calculate_average(numbers: list) -> int | float | None:
     try:
-        tuple_pers_sum = personal_sum(*numbers)
-
-        return tuple_pers_sum[0] / (len(*numbers) - tuple_pers_sum[1])
+        s, incorrect_data = personal_sum(numbers)
+        return s / (len(numbers) - incorrect_data)
     except ZeroDivisionError:
         return 0
     except TypeError:
-        return f'В numbers записан некорректный тип данных'
+        print(f'В numbers записан некорректный тип данных')
+        return None
 
 
 print(f'Результат 1: {calculate_average("1, 2, 3")}')
